@@ -6,11 +6,6 @@ function Game(){
 
     function init() {
         drawer.init();
-
-        //prevent right click
-        document.addEventListener('contextmenu', function(event) {
-            event.preventDefault();
-        }, true);
     }
     init();
 }

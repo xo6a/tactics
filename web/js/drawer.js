@@ -8,9 +8,9 @@ function Drawer(objects) {
         tilesize: 30
     };
 
-    var d = this,
-        xScreen = 0,
-        yScreen = 0,
+    var drawer = this,
+        ScreenPos = {x:0,y:0},
+        $canvas = jQuery('#canvas'),
         context = document.getElementById('canvas').getContext('2d'),
         xSize = objects.xSize,
         ySize = objects.ySize,
@@ -18,6 +18,9 @@ function Drawer(objects) {
         tilesize = objects.tilesize,
         w = window.innerWidth,
         h = window.innerHeight,
+        move = false,
+        moveStart = {x:0,y:0},
+        moveScreenStart = {x:0,y:0},
         templates = {
             circle: '<circle cx="#cx#" cy="#cy#" r="' + (tilesize / 2 - 4) + '" fill="#color#"/>',
             rect: '<rect x="#cx#" y="#cy#" width="' + (tilesize - 2) + '" height="' + (tilesize - 2) + '" fill="#color#" />'
@@ -28,11 +31,6 @@ function Drawer(objects) {
 
 
     /** public methods */
-    this.getTile = function (x, y) {
-        var char = tiles.charAt((x - 1) * xSize + y-1);
-        return (char === '') ? ' ' : char;
-    };
-
     this.redraw = function () {
         //debug
         var time = performance.now();
@@ -46,10 +44,10 @@ function Drawer(objects) {
         context.fillStyle = "#000000";
         context.fillRect(0, 0, w, h);
 
-        var xMin = Math.floor(xScreen),
-            yMin = Math.floor(yScreen),
-            xMax = (w - Math.floor(xScreen)) / tilesize + 1,
-            yMax = (h - Math.floor(yScreen)) / tilesize + 1;
+        var xMin = -Math.floor(ScreenPos.x / tilesize),
+            yMin = -Math.floor(ScreenPos.y / tilesize),
+            xMax = (w - Math.floor(ScreenPos.x)) / tilesize + 1,
+            yMax = (h - Math.floor(ScreenPos.y)) / tilesize + 1;
 
         for (var x = xMin; x <= xMax; x++) {
             for (var y = yMin; y <= yMax; y++) {
@@ -79,8 +77,13 @@ function Drawer(objects) {
                 context.fillStyle = "#222222";
         }
         if (draw) {
-            context.fillRect((x-1) * tilesize + 1, (y-1) * tilesize + 1, tilesize - 1, tilesize - 1);
+            context.fillRect((x-1) * tilesize + 1 + Math.floor(ScreenPos.x), (y-1) * tilesize + 1 + Math.floor(ScreenPos.y), tilesize - 1, tilesize - 1);
         }
+    };
+
+    this.getTile = function (x, y) {
+        var char = tiles.charAt((x - 1) * xSize + y-1);
+        return (char === '') ? ' ' : char;
     };
 
 
@@ -89,8 +92,44 @@ function Drawer(objects) {
         this.redraw();
     };
 
-    $(window).resize(function () {
-        d.redraw();
+    jQuery(window).resize(function () {
+        drawer.redraw();
     });
 
+    $canvas.contextmenu(function () {
+        event.preventDefault();
+    });
+
+    $canvas.mousedown(function (e) {
+        //right mouse button
+        if (e.which == '3') {
+            move = true;
+            moveStart.x = e.screenX;
+            moveStart.y = e.screenY;
+            moveScreenStart.x = ScreenPos.x;
+            moveScreenStart.y = ScreenPos.y;
+        }
+    });
+
+    $canvas.mouseup(function (e) {
+        if (e.which == '3') {
+            move = false;
+        }
+    });
+
+    $canvas.mouseout(function () {
+        move = false;
+    });
+
+    $canvas.mousemove(function (e) {
+        if (move) {
+            var deltaX = e.screenX - moveStart.x,
+                deltaY = e.screenY - moveStart.y;
+
+            ScreenPos.x = moveScreenStart.x + deltaX;
+            ScreenPos.y = moveScreenStart.y + deltaY;
+
+            drawer.redraw();
+        }
+    });
 }
