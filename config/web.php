@@ -7,6 +7,10 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'assetManager'=>[
+            'class'=>'yii\web\AssetManager',
+            'linkAssets'=>true,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'asdaqwdqwdasdqdqwdASDASDQWDQASD1231',
@@ -38,14 +42,12 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
+            'class'=>'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => require(__DIR__ . '/route.php'),
         ],
-        */
     ],
     'params' => $params,
 ];
