@@ -7,6 +7,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        //TODO INSERT SERVICES HERE
         'assetManager'=>[
             'class'=>'yii\web\AssetManager',
             'linkAssets'=>true,
