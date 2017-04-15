@@ -1,3 +1,6 @@
+<?php
+$this->title = 'Tactics battlefield';
+?>
 <div id="game">
     <canvas id="canvas">Обновите браузер</canvas>
     <div id="panel">

@@ -5,40 +5,73 @@ use yii\db\Schema;
 
 class m170413_095317_create_tables extends Migration
 {
-    public $tableName;
+    public $tableRoom = '{{%room}}';
+    public $tableTeam = '{{%team}}';
+    public $tableUnit = '{{%unit}}';
+    public $tableUnitType = '{{%unittype}}';
 
-
-    public function up(){}
-    public function down(){}
-    public function safeUp()
+    public function up()
     {
-        $this->tableName = '{{%test}}';
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
-        $this->createTable($this->tableName, [
+
+        $this->createTable($this->tableRoom, [
             'id' => Schema::TYPE_PK,
-            'username' => Schema::TYPE_STRING . ' NOT NULL',
-            'password' => Schema::TYPE_STRING . ' NOT NULL',
-            'auth_key' => Schema::TYPE_STRING . ' NOT NULL',
-            'token' => Schema::TYPE_STRING . ' NOT NULL',
-            'email' => Schema::TYPE_STRING . ' NOT NULL'
+            'map' => Schema::TYPE_STRING . ' NOT NULL',
+            'turn' => Schema::TYPE_STRING . ' NOT NULL',
+            'state' => Schema::TYPE_STRING . ' NOT NULL'
         ], $tableOptions);
-        $this->createIndex('username', $this->tableName, 'username', true);
-//        $this->execute($this->addUserSql());
+
+        $this->createTable($this->tableTeam, [
+            'id' => Schema::TYPE_PK,
+            'room_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'color' => Schema::TYPE_STRING . ' NOT NULL',
+        ], $tableOptions);
+
+        $this->createTable($this->tableUnit, [
+            'id' => Schema::TYPE_PK,
+            'team_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'nickname' => Schema::TYPE_STRING . ' NOT NULL',
+            'unittype_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'state' => Schema::TYPE_STRING . ' NOT NULL',
+            'xpos' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'ypos' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'look' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'orderx' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'ordery' => Schema::TYPE_INTEGER . ' NOT NULL',
+        ], $tableOptions);
+
+        $this->createTable($this->tableUnitType, [
+            'id' => Schema::TYPE_STRING,
+            'name' => Schema::TYPE_STRING . ' NOT NULL',
+            'move' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'weapon' => Schema::TYPE_STRING . ' NOT NULL',
+            'viewangle' => Schema::TYPE_INTEGER . ' NOT NULL',
+        ], $tableOptions);
+
+//        $this->createIndex('username', $this->tableRoom, 'username', true);
+        $this->insertUnitTypes();
     }
 
-//    private function addUserSql()
-//    {
-//        $password = Yii::$app->security->generatePasswordHash('admin');
-//        $auth_key = Yii::$app->security->generateRandomString();
-//        $token = Yii::$app->security->generateRandomString() . '_' . time();
-//        return "INSERT INTO {{%user}} (`username`, `email`, `password`, `auth_key`, `token`) VALUES ('admin', 'xo6a@myblog.loc', '$password', '$auth_key', '$token')";
-//    }
+    private function insertUnitTypes(){
+        $this->execute($this->buildInsertUnitTypeSql('shooter', 'Стрелок', '4', 'rifle', '90'));
+        $this->execute($this->buildInsertUnitTypeSql('sniper', 'Снайпер', '4', 'sniperrifle', '90'));
+        $this->execute($this->buildInsertUnitTypeSql('scout', 'Разведчик', '5', 'rifle', '90'));
+        $this->execute($this->buildInsertUnitTypeSql('support', 'Пулеметчик', '4', 'machinegun', '90'));
+    }
 
-    public function safeDown()
+    private function buildInsertUnitTypeSql($id, $name, $move, $weapon, $viewtype)
     {
-        $this->dropTable('test');
+        return "INSERT INTO $this->tableUnitType (`id`, `name`, `move`, `weapon`, `viewangle`) VALUES ('$id', '$name', '$move', '$weapon', '$viewtype')";
+    }
+
+    public function down()
+    {
+        $this->dropTable($this->tableRoom);
+        $this->dropTable($this->tableTeam);
+        $this->dropTable($this->tableUnit);
+        $this->dropTable($this->tableUnitType);
     }
 }

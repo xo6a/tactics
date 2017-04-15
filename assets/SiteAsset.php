@@ -4,18 +4,14 @@ namespace app\assets;
 
 use yii\web\AssetBundle;
 
-class GameAsset extends AssetBundle
+class SiteAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/game.css',
+        'css/site.css',
     ];
     public $js = [
-        'js/map.js',
-        'js/api.js',
-        'js/drawer.js',
-        'js/game.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

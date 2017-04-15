@@ -6,21 +6,34 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 
-class SiteController extends Controller
+class TacticsController extends Controller
 {
 
     public function __construct($id, $module, $config = [])
     {
         parent::__construct($id, $module, $config);
-        $this->layout = 'game';
+        $this->layout = 'site';
     }
 
-    public function actionGame()
+    public function actionRoomlist()
     {
-        return $this->render('game');
+        return $this->render('room-list');
+    }
+
+    public function actionCreateroom()
+    {
+        $unit = Yii::$app->unit;
+        $uTypes = $unit->getUnitTypes();
+        return $this->render('create-room', [
+            'uTypes' => $uTypes,
+        ]);
+    }
+
+    public function actionBattlefield()
+    {
+        $this->layout = 'game';
+        return $this->render('battlefield');
     }
 
     /**
