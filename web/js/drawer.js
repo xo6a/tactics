@@ -78,6 +78,18 @@ function Drawer(data) {
         context.fillStyle = "#000000";
         context.fillRect(0, 0, w, h);
 
+        drawAllTiles();
+        drawVision();
+        drawAllUnits();
+        drawAllOrders();
+        drawSelectedUnit();
+
+        //debug
+        // time = performance.now() - time;
+        // console.log('Время выполнения = ', time);
+    }
+
+    function drawAllTiles() {
         var xMin = -Math.floor(ScreenPos.x / tilesize),
             yMin = -Math.floor(ScreenPos.y / tilesize),
             xMax = (w - Math.floor(ScreenPos.x)) / tilesize + 1,
@@ -88,15 +100,6 @@ function Drawer(data) {
                 drawTile(x, y);
             }
         }
-
-        drawVision();
-        drawAllUnits();
-        drawAllOrders();
-        drawSelectedUnit();
-
-        //debug
-        // time = performance.now() - time;
-        // console.log('Время выполнения = ', time);
     }
 
     function drawVision() {
@@ -109,19 +112,19 @@ function Drawer(data) {
     function drawAllOrders() {
         orders.forEach(function (order) {
             context.beginPath();
-            context.arc(order.unit_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 8, 0, 2 * Math.PI, false);
+            context.arc(order.unit_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 6, 0, 2 * Math.PI, false);
             context.fillStyle = 'green';
             context.fill();
 
             context.beginPath();
-            context.arc(order.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 8, 0, 2 * Math.PI, false);
+            context.arc(order.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 6, 0, 2 * Math.PI, false);
             context.fillStyle = 'green';
             context.fill();
 
             context.beginPath();
             context.moveTo(order.unit_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
             context.lineTo(order.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
-            context.strokeStyle = "green";
+            context.strokeStyle = 'green';
             context.stroke();
         });
     }
@@ -129,7 +132,7 @@ function Drawer(data) {
     function drawSelectedUnit() {
         if (selectedUnit !== false) {
             context.beginPath();
-            context.arc(selectedUnit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), selectedUnit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 8, 0, 2 * Math.PI, false);
+            context.arc(selectedUnit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), selectedUnit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 6, 0, 2 * Math.PI, false);
             context.fillStyle = 'red';
             context.fill();
 
