@@ -8,8 +8,9 @@ function Api(
         data = '{}';
 
         jQuery.ajax({
-            url: "/api/test",
-            methid: 'POST',
+            url: '/api/test',
+            contentType: 'application/json',
+            method: 'POST',
             dataType: 'json',
             data:data
         }).done(function(responce) {

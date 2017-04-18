@@ -37,6 +37,7 @@ function Drawer(data) {
         tilesize = data.tilesize,
         units = data.units,
         orders = [],
+        looks = [],
         selectedUnit = false,
         w = window.innerWidth,
         h = window.innerHeight,
@@ -54,6 +55,10 @@ function Drawer(data) {
         return orders;
     };
 
+    this.getLooks = function () {
+        return looks;
+    };
+
     this.init = function () {
         redraw();
     };
@@ -64,6 +69,9 @@ function Drawer(data) {
 
 
 
+
+
+    /** private methods */
 
     function redraw() {
         //debug
@@ -82,6 +90,7 @@ function Drawer(data) {
         drawVision();
         drawAllUnits();
         drawAllOrders();
+        drawAllLooks();
         drawSelectedUnit();
 
         //debug
@@ -106,6 +115,21 @@ function Drawer(data) {
         vision.forEach(function (v) {
             context.fillStyle = 'rgba(200, 200, 200, 0.4)';
             context.fillRect(v.x * tilesize + 1 + Math.floor(ScreenPos.x), v.y * tilesize + 1 + Math.floor(ScreenPos.y), tilesize - 1, tilesize - 1);
+        });
+    }
+
+    function drawAllLooks() {
+        looks.forEach(function (look) {
+            context.beginPath();
+            context.arc(look.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), look.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 10, 0, 2 * Math.PI, false);
+            context.fillStyle = 'red';
+            context.fill();
+
+            context.beginPath();
+            context.moveTo(look.unit_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), look.unit_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
+            context.lineTo(look.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), look.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
+            context.strokeStyle = 'red';
+            context.stroke();
         });
     }
 
@@ -211,6 +235,32 @@ function Drawer(data) {
         return u;
     }
 
+    function setLook(unit, x, y) {
+
+        var consilienceLookId = false,
+            newLook = {
+                unit_id: unit.id,
+                unit_x: unit.x,
+                unit_y: unit.y,
+                unit_new_x: x,
+                unit_new_y: y
+            };
+
+        looks.forEach(function (look, index) {
+            if (look.unit_id == unit.id) {
+                consilienceLookId = index;
+            }
+        });
+
+        if (consilienceLookId === false) {
+            looks.push(newLook);
+        } else {
+            looks[consilienceLookId] = newLook;
+        }
+
+        return true;
+    }
+
     function setOrder(unit, x, y) {
         //check distance
         if (!isCanMove(unit, x, y)){
@@ -239,10 +289,7 @@ function Drawer(data) {
         }
 
         return true;
-    };
-
-
-    /** private methods */
+    }
 
     function isCanMove(u, x, y) {
         if (getDistance(u.x, u.y, x, y) > u.speed)
@@ -305,13 +352,28 @@ function Drawer(data) {
             y = Math.floor((e.offsetY - ScreenPos.y) / tilesize),
             u = getUnit(x, y);
 
-        if (u === false && selectedUnit !== false) {
-            if (setOrder(selectedUnit, x, y)) {
+        if (u === selectedUnit && selectedUnit !== false) {
+            selectedUnit = false;
+        } else if (u === false && selectedUnit !== false) {
+            if (e.ctrlKey) {
+                if (setLook(selectedUnit, x, y)) {
+                    selectedUnit = false;
+                }
+            } else if (setOrder(selectedUnit, x, y)) {
                 selectedUnit = false;
             }
         } else {
             selectedUnit = u;
         }
         redraw();
+    });
+
+    $canvas.mousemove(function (e) {
+        if (e.ctrlKey) {
+            if (selectedUnit !== false)
+                $canvas.addClass('ctrl');
+        } else {
+            $canvas.removeClass('ctrl');
+        }
     });
 }

@@ -16,6 +16,10 @@ body {
     height: 100%;
 }
 
+    #canvas.ctrl{
+        cursor: url('cursor/eye.ico') 12 12, default;
+    }
+
 #panel{
     position: fixed;
     top:0;

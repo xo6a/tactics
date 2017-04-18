@@ -15,7 +15,9 @@ function Game(){
 
     $butEndTurn.click(function () {
         //send ajax orders
-        var orders = drawer.getOrders();
+        var
+            orders = drawer.getOrders(),
+            looks = drawer.getOrders();
 
         api.ajaxEndTurn();
     });
