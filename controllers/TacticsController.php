@@ -7,17 +7,15 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use tactics\Unit;
+use tactics\UnitClass;
 
 class TacticsController extends Controller
 {
-    /** @var Unit */
-    private $unit;
 
     public function __construct($id, $module, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->layout = 'site';
-        $this->unit = Yii::$app->unit;
     }
 
     public function actionRoomlist()
@@ -27,7 +25,8 @@ class TacticsController extends Controller
 
     public function actionCreateroom()
     {
-        $uTypes = $this->unit->getUnitTypes();
+        $uTypes = UnitClass::find()->all();
+
         return $this->render('create-room', [
             'uTypes' => $uTypes,
         ]);

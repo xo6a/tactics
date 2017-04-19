@@ -12,6 +12,7 @@ class SiteAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        'js/create-room.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

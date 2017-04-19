@@ -7,12 +7,12 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
-        'tactics' => [
-            'class' => 'tactics\Tactics',
-        ],
-        'unit' => [
-            'class' => 'tactics\Unit',
-        ],
+//        'tactics' => [
+//            'class' => 'tactics\Tactics',
+//        ],
+//        'unit' => [
+//            'class' => 'tactics\Unit',
+//        ],
         'assetManager'=>[
             'class'=>'yii\web\AssetManager',
             'linkAssets'=>true,

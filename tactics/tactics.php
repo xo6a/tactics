@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Tactics;  
+namespace tactics;
 
 class Tactics
 {

@@ -12,6 +12,11 @@ body {
     min-height:100%;
 }
 
-select,input{color:#000;}
+select,input,button{color:#000;}
 
 h1{margin:0 0 50px 0;}
+
+.team-unit{
+    height: 25px;
+    margin: 8px 0;
+}
