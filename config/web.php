@@ -8,10 +8,10 @@ $config = [
     'bootstrap' => ['log'],
     'components' => [
         'tactics' => [
-            'class' => 'app\tactics\Tactics',
+            'class' => 'tactics\Tactics',
         ],
         'unit' => [
-            'class' => 'app\tactics\Unit',
+            'class' => 'tactics\Unit',
         ],
         'assetManager'=>[
             'class'=>'yii\web\AssetManager',
