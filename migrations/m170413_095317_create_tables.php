@@ -8,7 +8,9 @@ class m170413_095317_create_tables extends Migration
     public $tableRoom = '{{%room}}';
     public $tableTeam = '{{%team}}';
     public $tableUnit = '{{%unit}}';
-    public $tableUnitType = '{{%unittype}}';
+    public $tableUnitClass = '{{%unitclass}}';
+    public $tableWeapon = '{{%weapon}}';
+    public $tableOrders = '{{%orders}}';
 
     public function up()
     {
@@ -20,51 +22,84 @@ class m170413_095317_create_tables extends Migration
         $this->createTable($this->tableRoom, [
             'id' => Schema::TYPE_PK,
             'map' => Schema::TYPE_STRING . ' NOT NULL',
-            'turn' => Schema::TYPE_STRING . ' NOT NULL',
+            'turn' => Schema::TYPE_INTEGER . ' NOT NULL',
             'state' => Schema::TYPE_STRING . ' NOT NULL'
         ], $tableOptions);
 
         $this->createTable($this->tableTeam, [
             'id' => Schema::TYPE_PK,
-            'room_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'name' => Schema::TYPE_STRING . ' NOT NULL',
+            'room' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'pass' => Schema::TYPE_STRING . ' NOT NULL',
             'color' => Schema::TYPE_STRING . ' NOT NULL',
         ], $tableOptions);
 
         $this->createTable($this->tableUnit, [
             'id' => Schema::TYPE_PK,
-            'team_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'nickname' => Schema::TYPE_STRING . ' NOT NULL',
-            'unittype_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'team' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'class' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'weapon' => Schema::TYPE_INTEGER . ' NOT NULL',
             'state' => Schema::TYPE_STRING . ' NOT NULL',
-            'xpos' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'ypos' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'look' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'orderx' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'ordery' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'x' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'y' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
 
-        $this->createTable($this->tableUnitType, [
-            'id' => Schema::TYPE_STRING,
+        $this->createTable($this->tableUnitClass, [
+            'id' => Schema::TYPE_PK,
             'name' => Schema::TYPE_STRING . ' NOT NULL',
             'move' => Schema::TYPE_INTEGER . ' NOT NULL',
             'weapon' => Schema::TYPE_STRING . ' NOT NULL',
-            'viewangle' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'view' => Schema::TYPE_INTEGER . ' NOT NULL',
+        ], $tableOptions);
+
+        $this->createTable($this->tableWeapon, [
+            'id' => Schema::TYPE_PK,
+            'name' => Schema::TYPE_STRING . ' NOT NULL',
+            'chances' => Schema::TYPE_STRING . ' NOT NULL',
+        ], $tableOptions);
+
+        $this->createTable($this->tableOrders, [
+            'id' => Schema::TYPE_PK,
+            'type' => Schema::TYPE_STRING . ' NOT NULL',
+            'room' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'turn' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'unit' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'x' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'y' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
 
 //        $this->createIndex('username', $this->tableRoom, 'username', true);
-        $this->insertUnitTypes();
+        $this->insertWeapons();
+        $this->insertUnitClasses();
     }
 
-    private function insertUnitTypes(){
-        $this->execute($this->buildInsertUnitTypeSql('shooter', 'Стрелок', '4', 'rifle', '90'));
-        $this->execute($this->buildInsertUnitTypeSql('sniper', 'Снайпер', '4', 'sniperrifle', '90'));
-        $this->execute($this->buildInsertUnitTypeSql('scout', 'Разведчик', '5', 'rifle', '90'));
-        $this->execute($this->buildInsertUnitTypeSql('support', 'Пулеметчик', '4', 'machinegun', '90'));
-    }
-
-    private function buildInsertUnitTypeSql($id, $name, $move, $weapon, $viewtype)
+    private function insertWeapons()
     {
-        return "INSERT INTO $this->tableUnitType (`id`, `name`, `move`, `weapon`, `viewangle`) VALUES ('$id', '$name', '$move', '$weapon', '$viewtype')";
+        $this->execute($this->buildInsertQuery($this->tableWeapon, ['name' => 'Автомат', 'chances' => '{"1":"95","2":"80","3":"60","4":"30"}']));
+        $this->execute($this->buildInsertQuery($this->tableWeapon, ['name' => 'Снайперская винтовка', 'chances' => '{"1":"95","2":"80","3":"60","4":"30"}']));
+        $this->execute($this->buildInsertQuery($this->tableWeapon, ['name' => 'Пулемет', 'chances' => '{"1":"95","2":"80","3":"60","4":"30"}']));
+    }
+
+    private function insertUnitClasses()
+    {
+        $this->execute($this->buildInsertQuery($this->tableUnitClass, ['name' => 'Стрелок', 'move' => '4', 'weapon' => '1', 'view' => '4']));
+        $this->execute($this->buildInsertQuery($this->tableUnitClass, ['name' => 'Снайпер', 'move' => '4', 'weapon' => '2', 'view' => '5']));
+        $this->execute($this->buildInsertQuery($this->tableUnitClass, ['name' => 'Разведчик', 'move' => '4', 'weapon' => '1', 'view' => '5']));
+        $this->execute($this->buildInsertQuery($this->tableUnitClass, ['name' => 'Пулеметчик', 'move' => '4', 'weapon' => '3', 'view' => '4']));
+    }
+
+    private function buildInsertQuery($tableName, $data)
+    {
+        $colNames = [];
+        $colValues = [];
+        foreach ($data as $key => $value) {
+            $colNames[] = "`$key`";
+            $colValues[] = "'$value'";
+        }
+        $colNames = implode(', ', $colNames);
+        $colValues = implode(', ', $colValues);
+        return "INSERT INTO $tableName ($colNames) VALUES ($colValues)";
     }
 
     public function down()
@@ -72,6 +107,8 @@ class m170413_095317_create_tables extends Migration
         $this->dropTable($this->tableRoom);
         $this->dropTable($this->tableTeam);
         $this->dropTable($this->tableUnit);
-        $this->dropTable($this->tableUnitType);
+        $this->dropTable($this->tableUnitClass);
+        $this->dropTable($this->tableWeapon);
+        $this->dropTable($this->tableOrders);
     }
 }
