@@ -16,7 +16,12 @@ select,input,button{color:#000;}
 
 h1{margin:0 0 50px 0;}
 
-.team-unit{
+.team_unit{
     height: 25px;
     margin: 8px 0;
+}
+
+.team_unit__input{
+    width: 200px;
+    display: inline-block;
 }
