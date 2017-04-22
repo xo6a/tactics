@@ -12,6 +12,7 @@ class SiteAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        'js/siteapi.js',
         'js/create-room.js',
         'js/spinner.js',
     ];

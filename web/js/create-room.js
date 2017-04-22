@@ -2,7 +2,8 @@ jQuery(document).ready(function ($) {
 
     var
         template = {},
-        spinner = new Spinner();
+        spinner = new Spinner(),
+        api = new Api();
 
     template['unit'] = '<li class="team_unit"><input type="text" value="#nickname#" class="form-control input-sm team_unit__input w150"> <span class="team_unit__class">#name#</span> <button type="button" class="btn btn-danger btn-xs" js="remove-unit">X</button></li>';
 
@@ -39,8 +40,15 @@ jQuery(document).ready(function ($) {
     });
 
     $('[js="create-room"]').click(function () {
-        console.log('create-room');
         spinner.show();
+        //prepare data
+        //todo
+        var params = {
+            action:'create-room',
+            afterCallback:spinner.hide
+        };
+        //send data
+        api.send(params);
     });
 
 });

@@ -13,7 +13,7 @@ class GameAsset extends AssetBundle
     ];
     public $js = [
         'js/map.js',
-        'js/api.js',
+        'js/gameapi.js',
         'js/drawer.js',
         'js/game.js',
     ];

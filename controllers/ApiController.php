@@ -22,4 +22,13 @@ class ApiController extends Controller
         return $items;
     }
 
+    public function actionCreateroom()
+    {
+        //create room
+        //todo
+        //say result true
+        $items = ['essefsdf'];
+        return $items;
+    }
+
 }

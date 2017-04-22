@@ -1,22 +1,26 @@
-function Api(
-
-){
+function Api(){
+    
     /** public methods */
-    this.ajaxEndTurn = function() {
-        console.log('ajaxEndTurn');
+    
+    this.send = function(params) {
+        console.log('send');
 
         data = '{}';
 
         jQuery.ajax({
-            url: '/api/test',
+            url: '/api/createroom',
             contentType: 'application/json',
             method: 'POST',
             dataType: 'json',
             data:data
         }).done(function(responce) {
-            console.log(responce);
+            
+        }).always(function() {
+            if (params.afterCallback != undefined)
+                params.afterCallback();
         });
     };
+
 
     /** private methods */
     function _f1() {}
