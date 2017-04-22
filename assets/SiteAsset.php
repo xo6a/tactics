@@ -13,6 +13,7 @@ class SiteAsset extends AssetBundle
     ];
     public $js = [
         'js/create-room.js',
+        'js/spinner.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -1,7 +1,8 @@
 jQuery(document).ready(function ($) {
 
     var
-        template = {};
+        template = {},
+        spinner = new Spinner();
 
     template['unit'] = '<li class="team_unit"><input type="text" value="#nickname#" class="form-control input-sm team_unit__input"> (#name#) <button type="button" class="btn btn-danger btn-xs" js="remove-unit">X</button></li>';
 
@@ -39,6 +40,7 @@ jQuery(document).ready(function ($) {
 
     $('[js="create-room"]').click(function () {
         console.log('create-room');
+        spinner.show();
     });
 
 });
