@@ -66,7 +66,6 @@ $this->title = 'Create room';
 </div>
 
 <br>
-<br>
 
 <div>
     <button type="button" class="btn btn-primary" js="create-room">Создать</button>

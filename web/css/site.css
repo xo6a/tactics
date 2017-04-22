@@ -6,7 +6,7 @@ body {
 }
 
 .page_wrap {
-    padding:50px;
+    padding:20px 10%;
     background-color: #000;
     color:#fff;
     min-height:100%;
@@ -14,7 +14,7 @@ body {
 
 select,input,button{color:#000;}
 
-h1{margin:0 0 20px 0;}
+h1{margin:20px 0;}
 
 .team_unit{
     height: 25px;
@@ -38,6 +38,11 @@ h1{margin:0 0 20px 0;}
     width: 150px;
 }
 
+
+
+/****************/
+/*    SPINNER   */
+/****************/
 
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */

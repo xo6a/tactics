@@ -11,6 +11,7 @@ use app\assets\SiteAsset;
 use app\components\MenuWidget;
 
 SiteAsset::register($this);
+$title = Html::encode($this->title);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -19,15 +20,16 @@ SiteAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?//= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= $title ?></title>
     <?php $this->head() ?>
 </head>
 <body>
 <div class="page_wrap">
 <?php $this->beginBody() ?>
-<h1><?= Html::encode($this->title) ?></h1>
 
 <?= MenuWidget::widget() ?>
+
+<h1><?= $title ?></h1>
 
 <?= $content ?>
 
