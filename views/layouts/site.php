@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\SiteAsset;
+use app\components\MenuWidget;
 
 SiteAsset::register($this);
 ?>
@@ -25,6 +26,8 @@ SiteAsset::register($this);
 <div class="page_wrap">
 <?php $this->beginBody() ?>
 <h1><?= Html::encode($this->title) ?></h1>
+
+<?= MenuWidget::widget() ?>
 
 <?= $content ?>
 
