@@ -65,6 +65,8 @@ $this->title = 'Create room';
     <ol js-target="team-b"></ol>
 </div>
 
+<br>
+<br>
 
 <div>
     <button type="button" class="btn btn-primary" js="create-room">Создать</button>

@@ -4,7 +4,7 @@ jQuery(document).ready(function ($) {
         template = {},
         spinner = new Spinner();
 
-    template['unit'] = '<li class="team_unit"><input type="text" value="#nickname#" class="form-control input-sm team_unit__input"> (#name#) <button type="button" class="btn btn-danger btn-xs" js="remove-unit">X</button></li>';
+    template['unit'] = '<li class="team_unit"><input type="text" value="#nickname#" class="form-control input-sm team_unit__input w150"> <span class="team_unit__class">#name#</span> <button type="button" class="btn btn-danger btn-xs" js="remove-unit">X</button></li>';
 
     function generateNickname() {
         var names = [

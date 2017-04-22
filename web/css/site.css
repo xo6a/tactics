@@ -22,10 +22,21 @@ h1{margin:0 0 50px 0;}
 }
 
 .team_unit__input{
-    width: 200px;
     display: inline-block;
+    width: 200px;
 }
 
+.team_unit__class{
+    display: inline-block;
+    margin: 0 10px;
+    background-color: #1c5a29;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.w150{
+    width: 150px;
+}
 
 
 .loader {
