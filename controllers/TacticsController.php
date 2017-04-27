@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use tactics\Unit;
 use tactics\UnitClass;
+use yii\helpers\Url;
 
 class TacticsController extends Controller
 {
@@ -30,6 +31,20 @@ class TacticsController extends Controller
         return $this->render('create-room', [
             'uTypes' => $uTypes,
         ]);
+    }
+
+    public function beforeAction($action) {
+        if (in_array($action->actionMethod,[
+            'actionSaveroom'
+        ])) {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
+
+    public function actionSaveroom()
+    {
+        $this->redirect(Url::to(['tactics/roomlist']),302);
     }
 
     public function actionBattlefield()

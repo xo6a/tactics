@@ -1,6 +1,10 @@
 <?php
+use yii\helpers\Url;
+
 $this->title = 'Create room';
 ?>
+<form action="<?= Url::to(['tactics/saveroom']);?>" method="post">
+
 <h2>Комната</h2>
 <div><label>Название<br><input type="text" name="name" class="form-control"></label></div>
 <div>
@@ -68,6 +72,8 @@ $this->title = 'Create room';
 <br>
 
 <div>
-    <button type="button" class="btn btn-primary" js="create-room">Создать</button>
+    <input type="submit" class="btn btn-primary" js="create-room" value="Создать">
 </div>
+
+</form>
 

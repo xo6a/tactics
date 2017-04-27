@@ -39,16 +39,4 @@ jQuery(document).ready(function ($) {
         $(this).closest('li').remove();
     });
 
-    $('[js="create-room"]').click(function () {
-        spinner.show();
-        //prepare data
-        //todo
-        var params = {
-            action:'create-room',
-            afterCallback:spinner.hide
-        };
-        //send data
-        api.send(params);
-    });
-
 });
