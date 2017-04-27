@@ -22,13 +22,13 @@ $this->title = 'Create room';
     <div>
         <label>
             Пароль<br>
-            <input type="text" id="team_a_pass" class="form-control team_unit__input">
+            <input type="text" id="team_a_pass" name="team_a_pass" class="form-control team_unit__input">
         </label>
         <label>
             Цвет<br>
-            <select class="form-control">
-                <option name="red">Красный</option>
-                <option name="red">Синий</option>
+            <select class="form-control" name="team_a_color">
+                <option value="red">Красный</option>
+                <option value="red">Синий</option>
             </select>
         </label>
     </div>
@@ -48,13 +48,13 @@ $this->title = 'Create room';
     <div>
         <label>
             Пароль<br>
-            <input type="text" id="team_a_pass" class="form-control team_unit__input">
+            <input type="text" id="team_b_pass" name="team_b_pass" class="form-control team_unit__input">
         </label>
         <label>
             Цвет<br>
-            <select class="form-control">
-                <option name="red">Синий</option>
-                <option name="red">Красный</option>
+            <select class="form-control" name="team_b_color">
+                <option value="red">Синий</option>
+                <option value="red">Красный</option>
             </select>
         </label>
     </div>
@@ -72,6 +72,7 @@ $this->title = 'Create room';
 <br>
 
 <div>
+    <input type="hidden" js="units" name="units">
     <input type="submit" class="btn btn-primary" js="create-room" value="Создать">
 </div>
 

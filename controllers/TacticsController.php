@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use tactics\Unit;
 use tactics\UnitClass;
 use yii\helpers\Url;
+use yii\web\Request;
 
 class TacticsController extends Controller
 {
@@ -44,7 +45,9 @@ class TacticsController extends Controller
 
     public function actionSaveroom()
     {
-        $this->redirect(Url::to(['tactics/roomlist']),302);
+        $request = Yii::$app->request;
+        var_dump($request->post());
+//        $this->redirect(Url::to(['tactics/roomlist']),302);
     }
 
     public function actionBattlefield()
