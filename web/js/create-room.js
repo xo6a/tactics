@@ -26,7 +26,7 @@ jQuery(document).ready(function ($) {
             unit = template['unit'],
             team = $(this).data('team'),
             nickname = generateNickname(),
-            json = '{class:"'+class_id+'",nickname:"'+nickname+'",team:"'+team+'"}';
+            json = '{"class":"'+class_id+'","nickname":"'+nickname+'","team":"'+team+'"}';
 
         e.preventDefault();
 
@@ -50,7 +50,7 @@ jQuery(document).ready(function ($) {
             units.push($(this).data('json'));
         });
 
-        $('[js="units"]').val(units);
+        $('[js="units"]').val(JSON.stringify(units));
     }
 
     $('[js="create-room"]').click(function () {

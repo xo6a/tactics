@@ -21,9 +21,11 @@ class m170413_095317_create_tables extends Migration
 
         $this->createTable($this->tableRoom, [
             'id' => Schema::TYPE_PK,
+            'name' => Schema::TYPE_STRING . ' NOT NULL',
             'map' => Schema::TYPE_STRING . ' NOT NULL',
             'turn' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'state' => Schema::TYPE_STRING . ' NOT NULL'
+            'state' => Schema::TYPE_STRING . ' NOT NULL',
+            'last_update' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')
         ], $tableOptions);
 
         $this->createTable($this->tableTeam, [

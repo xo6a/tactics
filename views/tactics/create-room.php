@@ -2,11 +2,16 @@
 use yii\helpers\Url;
 
 $this->title = 'Create room';
+
+function generateRoomName()
+{
+    return 'Room ' . date('Y-m-d H:m:s');
+}
 ?>
 <form action="<?= Url::to(['tactics/saveroom']);?>" method="post">
 
 <h2>Комната</h2>
-<div><label>Название<br><input type="text" name="name" class="form-control"></label></div>
+<div><label>Название<br><input type="text" name="name" class="form-control" value="<?=generateRoomName()?>"></label></div>
 <div>
     <label>Карта<br>
         <select class="form-control">
