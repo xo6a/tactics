@@ -25,7 +25,11 @@ class TacticsController extends Controller
 
     public function actionRoomlist()
     {
-        return $this->render('room-list');
+        $rooms = Room::find()->all();
+        
+        return $this->render('room-list', [
+            'rooms' => $rooms,
+        ]);
     }
 
     public function actionCreateroom()

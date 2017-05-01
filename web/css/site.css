@@ -41,6 +41,37 @@ h1{margin:20px 0;}
 
 
 /****************/
+/*     ROOM     */
+/****************/
+.room_item {
+    margin: 10px 0;
+    background-color: #2e3436;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.room_item__infoblock {
+    display: inline-block;
+}
+
+.room_item__infoblock__label {
+    padding: 5px 10px;
+    border-radius: 10px 10px 0 0;
+}
+
+.room_item__infoblock__data {
+    padding: 5px 10px;
+    border: 1px solid #337ab7;
+    border-radius: 0 0 10px 10px;
+}
+
+.team_row{
+    margin-top:5px;
+}
+
+
+
+/****************/
 /*    SPINNER   */
 /****************/
 
