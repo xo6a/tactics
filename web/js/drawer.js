@@ -8,9 +8,10 @@ function Drawer(data) {
         ySize: 50,
         tiles: '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890',
         units: [
-            {id: 1, x: 2, y: 3, type: 'soldier', speed: 4},
-            {id: 2, x: 2, y: 4, type: 'sniper', speed: 4},
-            {id: 3, x: 5, y: 5, type: 'soldier', speed: 4}
+            {id: 1, x: 2, y: 3, type: '1', speed: 4},
+            {id: 2, x: 4, y: 3, type: '2', speed: 4},
+            {id: 3, x: 6, y: 3, type: '3', speed: 4},
+            {id: 4, x: 8, y: 3, type: '4', speed: 4}
         ],
         vision: [
             {x: 1, y: 2},
@@ -88,9 +89,9 @@ function Drawer(data) {
 
         drawAllTiles();
         drawVision();
-        drawAllUnits();
-        drawAllOrders();
         drawAllLooks();
+        drawAllOrders();
+        drawAllUnits();
         drawSelectedUnit();
 
         //debug
@@ -122,29 +123,32 @@ function Drawer(data) {
         looks.forEach(function (look) {
             context.beginPath();
             context.arc(look.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), look.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 10, 0, 2 * Math.PI, false);
-            context.fillStyle = 'red';
+            context.fillStyle = 'blue';
             context.fill();
 
             context.beginPath();
             context.moveTo(look.unit_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), look.unit_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
             context.lineTo(look.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), look.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
-            context.strokeStyle = 'red';
+            context.strokeStyle = 'blue';
             context.stroke();
         });
     }
 
     function drawAllOrders() {
         orders.forEach(function (order) {
+            context.lineWidth = 4;
             context.beginPath();
-            context.arc(order.unit_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 6, 0, 2 * Math.PI, false);
+            context.arc(order.unit_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 2, 0, 2 * Math.PI, false);
+            context.strokeStyle = 'green';
+            context.stroke();
+
+            context.lineWidth = 2;
+            context.beginPath();
+            context.arc(order.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 10, 0, 2 * Math.PI, false);
             context.fillStyle = 'green';
             context.fill();
 
-            context.beginPath();
-            context.arc(order.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 6, 0, 2 * Math.PI, false);
-            context.fillStyle = 'green';
-            context.fill();
-
+            context.lineWidth = 1;
             context.beginPath();
             context.moveTo(order.unit_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
             context.lineTo(order.unit_new_x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), order.unit_new_y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
@@ -155,10 +159,12 @@ function Drawer(data) {
 
     function drawSelectedUnit() {
         if (selectedUnit !== false) {
+            context.lineWidth = 2;
             context.beginPath();
-            context.arc(selectedUnit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), selectedUnit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 6, 0, 2 * Math.PI, false);
-            context.fillStyle = 'red';
-            context.fill();
+            context.arc(selectedUnit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), selectedUnit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 2, 0, 2 * Math.PI, false);
+            context.strokeStyle = 'red';
+            context.stroke();
+            context.lineWidth = 1;
 
             //draw posible move
             var speed = selectedUnit.speed;
@@ -183,20 +189,58 @@ function Drawer(data) {
 
     function drawUnit(unit) {
         var color = 'red';
-        switch (unit.type) {
-            case 'sniper':
-                color = 'gray';
-                break;
-            case 'soldier':
-            default:
-                color = 'blue';
-                break;
-        }
 
+        color = 'blue';
         context.beginPath();
         context.arc(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 2, 0, 2 * Math.PI, false);
         context.fillStyle = color;
         context.fill();
+        context.strokeStyle = 'white';
+        switch (unit.type) {
+            case '1'://стрелок
+                context.beginPath();
+                context.moveTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x) - 6, unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y) - 6);
+                context.lineTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y) + 6);
+                context.lineTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x) + 6, unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y) - 6);
+                context.stroke();
+                break;
+            case '2'://снайпер
+                context.beginPath();
+                context.moveTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x) - 10, unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
+                context.lineTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x) + 10, unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y));
+                context.stroke();
+
+                context.beginPath();
+                context.moveTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y) + 10);
+                context.lineTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y) - 10);
+                context.stroke();
+
+                context.beginPath();
+                context.arc(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), tilesize / 2 - 8, 0, 2 * Math.PI, false);
+                context.stroke();
+                break;
+            case '3'://шнырь
+                context.beginPath();
+                context.arc(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y), 4, 0, 2 * Math.PI, false);
+                context.stroke();
+                context.fillStyle = 'white';
+                context.fill();
+                break;
+            case '4'://пулеметчик
+                context.beginPath();
+                context.moveTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x) - 8, unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y) + 6);
+                context.lineTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x) + 8, unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y) + 6);
+                context.stroke();
+
+                context.beginPath();
+                context.moveTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y) + 6);
+                context.lineTo(unit.x * tilesize + tilesize / 2 + Math.floor(ScreenPos.x), unit.y * tilesize + tilesize / 2 + Math.floor(ScreenPos.y) - 9);
+                context.stroke();
+                break;
+            default:
+                break;
+        }
+
     }
 
     function drawTile(x, y) {
