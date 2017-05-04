@@ -1,6 +1,4 @@
 <?php
-use yii\helpers\Url;
-
 $this->title = 'Create room';
 
 function generateRoomName()
@@ -8,7 +6,7 @@ function generateRoomName()
     return 'Room ' . date('Y-m-d H:m:s');
 }
 ?>
-<form action="<?= Url::to(['tactics/saveroom']);?>" method="post">
+<form action="<?= yii\helpers\Url::to(['tactics/saveroom']);?>" method="post">
 
 <h2>Комната</h2>
 <div><label>Название<br><input type="text" name="name" class="form-control" value="<?=generateRoomName()?>"></label></div>
@@ -41,11 +39,11 @@ function generateRoomName()
     foreach ($uTypes as $uType) {
         /* @var $uType tactics\UnitClass */
         ?>
-        <button class="btn btn-success" js="add-unit" data-team="team-a" data-unit-class="<?=$uType->id?>" data-unit-name="<?=$uType->name?>"><?=$uType->name?> <strong>+</strong></button>
+        <button class="btn btn-success" data-js="add-unit" data-team="team-a" data-unit-class="<?=$uType->id?>" data-unit-name="<?=$uType->name?>"><?=$uType->name?> <strong>+</strong></button>
         <?php
     }
     ?>
-    <ol js-target="team-a"></ol>
+    <ol data-js-target="team-a"></ol>
 </div>
 
 <h2>Команда Б</h2>
@@ -67,18 +65,18 @@ function generateRoomName()
     foreach ($uTypes as $uType) {
         /* @var $uType tactics\UnitClass */
         ?>
-        <button class="btn btn-success" js="add-unit" data-team="team-b" data-unit-class="<?=$uType->id?>" data-unit-name="<?=$uType->name?>"><?=$uType->name?> <strong>+</strong></button>
+        <button class="btn btn-success" data-js="add-unit" data-team="team-b" data-unit-class="<?=$uType->id?>" data-unit-name="<?=$uType->name?>"><?=$uType->name?> <strong>+</strong></button>
         <?php
     }
     ?>
-    <ol js-target="team-b"></ol>
+    <ol data-js-target="team-b"></ol>
 </div>
 
 <br>
 
 <div>
-    <input type="hidden" js="units" name="units">
-    <input type="submit" class="btn btn-primary" js="create-room" value="Создать">
+    <input type="hidden" data-js="units" name="units">
+    <input type="submit" class="btn btn-primary" data-js="create-room" value="Создать">
 </div>
 
 </form>

@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
         return names[Math.floor(Math.random()*names.length)];
     }
 
-    $('[js="add-unit"]').click(function (e) {
+    $('[data-js="add-unit"]').click(function (e) {
         var
             class_id = $(this).data('unit-class'),
             type = $(this).data('unit-name'),
@@ -36,10 +36,10 @@ jQuery(document).ready(function ($) {
         unit = unit.replace('#team#', team);
         unit = unit.replace('#json#', json);
 
-        $('[js-target="' + team + '"]').append(unit);
+        $('[data-js-target="' + team + '"]').append(unit);
     });
 
-    $(document).on('click', '[js="remove-unit"]', function () {
+    $(document).on('click', '[data-js="remove-unit"]', function () {
         $(this).closest('li').remove();
     });
 
@@ -50,11 +50,18 @@ jQuery(document).ready(function ($) {
             units.push($(this).data('json'));
         });
 
-        $('[js="units"]').val(JSON.stringify(units));
+        $('[data-js="units"]').val(JSON.stringify(units));
     }
 
-    $('[js="create-room"]').click(function () {
+    $('[data-js="create-room"]').click(function () {
         parseUnits();
+    });
+
+    $('[data-js="enter-room"]').click(function () {
+        var target = $(this).data('js-target'),
+            pass = $(target).val();
+
+        console.log(pass);
     });
 
 });

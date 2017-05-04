@@ -29,6 +29,10 @@ foreach ($rooms as $room) {
             <div class="room_item__infoblock__label bg-primary">last update</div>
             <div class="room_item__infoblock__data"><?=$room->last_update?></div>
         </div>
+        <div class="room_item__infoblock">
+            <div class="room_item__infoblock__label bg-primary"><button class="btn btn-xs btn-success">Войти</button></div>
+            <div class="room_item__infoblock__data">&nbsp;</div>
+        </div>
         <br>
         <br>
         <div>
@@ -37,7 +41,30 @@ foreach ($rooms as $room) {
                 <?php
                 foreach ($room->teams as $team){
                     ?>
-                    <div class="team_row"><span>id <?=$team->id?></span><span>name <?=$team->name?></span><span>color <?=$team->color?></span> <button class="btn btn-xs btn-success">Войти</button></div>
+                    <div class="team_row">
+
+                        <div class="room_item__infoblock">
+                            <div class="room_item__infoblock__label bg-primary">id</div>
+                            <div class="room_item__infoblock__data"><?=$team->id?></div>
+                        </div>
+                        <div class="room_item__infoblock">
+                            <div class="room_item__infoblock__label bg-primary">name</div>
+                            <div class="room_item__infoblock__data"><?=$team->name?></div>
+                        </div>
+                        <div class="room_item__infoblock">
+                            <div class="room_item__infoblock__label bg-primary">color</div>
+                            <div class="room_item__infoblock__data"><?=$team->color?></div>
+                        </div>
+                        <div class="room_item__infoblock">
+                            <form action="<?= yii\helpers\Url::to(['tactics/enterroom']);?>" method="post">
+                                <div class="room_item__infoblock__label bg-primary"><input type="submit" class="btn btn-xs btn-success" value="Войти" data-js="enter-room" data-js-target='[data-label="team_<?=$team->id?>"]'></div>
+                                <div class="room_item__infoblock__data"><input type="text" name="pass" class="form-control team_unit__input team_unit__input--small" placeholder="пароль" data-label="team_<?=$team->id?>"></div>
+                                <input type="hidden" name="room" value="<?=$room->id?>">
+                                <input type="hidden" name="team" value="<?=$team->id?>">
+                            </form>
+                        </div>
+
+                    </div>
                     <?php
                 }
                 ?>
@@ -46,3 +73,5 @@ foreach ($rooms as $room) {
     </div>
     <?php
 }
+?>
+

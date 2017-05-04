@@ -41,9 +41,37 @@ class TacticsController extends Controller
         ]);
     }
 
+    public function actionEnterroom()
+    {
+        //todo перенести в сервис
+
+        $post = Yii::$app->request->post();
+
+        $team = Team::find()->where(['id' => $post['team'], 'room' => $post['room']])->one();
+        if (is_null($team)) {
+            throw new HttpException(404, 'can\'t found team with id ' . $post['team']);
+        }
+        if ($team->pass != $post['pass']) {
+            throw new HttpException(403, 'password incorrect');
+        }
+
+        $session = Yii::$app->session;
+        if (!$session->isActive)
+            $session->open();
+        $auth = [
+            'room' => $post['room'],
+            'team' => $post['team'],
+            'time' => time(),
+        ];
+        $session->set('auth', $auth);
+
+        $this->redirect(Url::to(['tactics/battlefield']),302);
+    }
+
     public function beforeAction($action) {
         if (in_array($action->actionMethod,[
-            'actionSaveroom'
+            'actionSaveroom',
+            'actionEnterroom'
         ])) {
             $this->enableCsrfValidation = false;
         }
@@ -52,7 +80,10 @@ class TacticsController extends Controller
 
     public function actionSaveroom()
     {
+        //todo перенести в сервис
+
         $post = Yii::$app->request->post();
+
         $room = new Room();
         $room->name = $post['name'];
         $room->map = $post['map'];
