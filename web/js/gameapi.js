@@ -18,26 +18,33 @@ function Api(){
         });
     };
 
-    this.send = function(params) {
-        console.log(params);
+    this.send = function(action, data) {
+        console.log(action);
+        console.log(data);
 
-        data = '{}';
+        if (action == undefined) {
+            console.error('Undefined action');
+            return false;
+        }
+        if (action == '') {
+            console.error('Empty action');
+            return false;
+        }
 
         jQuery.ajax({
-            url: '/api/createroom',
-            contentType: 'application/json',
-            method: 'POST',
+            url: '/api/' + action,
+            ContentType: 'application/json',
+            type: 'POST',
             dataType: 'json',
-            data:data
+            data:{'data':data}
         }).done(function(responce) {
 
         }).always(function() {
-            if (params.afterCallback != undefined)
-                params.afterCallback();
+            data.afterCallback();
         });
     };
 
     /** private methods */
-    function _f1() {}
+    function f1() {}
 
 }

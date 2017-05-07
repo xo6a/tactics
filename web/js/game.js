@@ -1,29 +1,40 @@
 function Game(){
-    var map = new Map(),
-        drawer = new Drawer(),
+    // var map = new Map(),
+    var drawer, //new Drawer()
         api = new Api(),
-        playerId = 1;
+        spinner = new Spinner();
 
     var $butEndTurn = jQuery('.js-end-turn');
 
 
     /** init */
     function init() {
-        drawer.init();
+        drawer = new Drawer();
     }
     init();
 
+
+
+    /** control */
+
     $butEndTurn.click(function () {
         //send ajax orders
-        var
-            orders = drawer.getOrders(),
-            looks = drawer.getOrders();
+        spinner.show();
 
-        api.ajaxEndTurn();
+        var
+            data = {
+                orders: drawer.getOrders(),
+                looks: drawer.getLooks(),
+                afterCallback: spinner.hide //todo почему функция вызывается при передаче в качестве параметра
+            };
+
+        api.send('test',data);
     });
+
+
 
 }
 
-jQuery( document ).ready(function($) {
+jQuery(document).ready(function ($) {
     var game = new Game();
 });

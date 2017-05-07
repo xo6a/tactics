@@ -16,6 +16,7 @@ class GameAsset extends AssetBundle
         'js/gameapi.js',
         'js/drawer.js',
         'js/game.js',
+        'js/spinner.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

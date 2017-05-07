@@ -60,10 +60,6 @@ function Drawer(data) {
         return looks;
     };
 
-    this.init = function () {
-        redraw();
-    };
-
     this.redraw = function () {
         redraw();
     };
@@ -73,6 +69,11 @@ function Drawer(data) {
 
 
     /** private methods */
+
+    init();
+    function init() {
+        redraw();
+    };
 
     function redraw() {
         //debug
