@@ -11,9 +11,11 @@ class m170413_095317_create_tables extends Migration
     public $tableUnitClass = '{{%unitclass}}';
     public $tableWeapon = '{{%weapon}}';
     public $tableOrders = '{{%orders}}';
+    public $tableMap = '{{%map}}';
 
     public function up()
     {
+        $this->repair();
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
@@ -71,9 +73,21 @@ class m170413_095317_create_tables extends Migration
             'y' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
 
+        $this->createTable($this->tableMap, [
+            'id' => Schema::TYPE_PK,
+            'name' => Schema::TYPE_STRING . ' NOT NULL',
+            'tiles' => Schema::TYPE_STRING . ' NOT NULL',
+            'size_x' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'size_y' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'respawn' => Schema::TYPE_STRING . ' NOT NULL',
+        ], $tableOptions);
+
+        //todo tiles table
+        
 //        $this->createIndex('username', $this->tableRoom, 'username', true);
         $this->insertWeapons();
         $this->insertUnitClasses();
+        $this->insertMap();
     }
 
     private function insertWeapons()
@@ -89,6 +103,24 @@ class m170413_095317_create_tables extends Migration
         $this->execute($this->buildInsertQuery($this->tableUnitClass, ['name' => 'Снайпер', 'move' => '4', 'weapon' => '2', 'view' => '5']));
         $this->execute($this->buildInsertQuery($this->tableUnitClass, ['name' => 'Разведчик', 'move' => '4', 'weapon' => '1', 'view' => '5']));
         $this->execute($this->buildInsertQuery($this->tableUnitClass, ['name' => 'Пулеметчик', 'move' => '4', 'weapon' => '3', 'view' => '4']));
+    }
+
+    private function insertMap()
+    {
+$tiles = <<<EOT
+4111111111
+1111111111
+1111111111
+1111111111
+1111111111
+1111111111
+1111111111
+1111111111
+1111111111
+1111111111
+EOT;
+        $tiles = preg_replace( "/\r|\n|\r\n/", "", $tiles );
+        $this->execute($this->buildInsertQuery($this->tableMap, ['name' => 'Дом', 'tiles' => $tiles, 'size_x' => '10', 'size_y' => '10', 'respawn' => '[{x:1,y:1},{x:9,y:9}]']));
     }
 
     private function buildInsertQuery($tableName, $data)
@@ -112,5 +144,29 @@ class m170413_095317_create_tables extends Migration
         $this->dropTable($this->tableUnitClass);
         $this->dropTable($this->tableWeapon);
         $this->dropTable($this->tableOrders);
+        $this->dropTable($this->tableMap);
+    }
+
+    public function repair()
+    {
+        if ($this->tableExist($this->tableRoom))
+            $this->dropTable($this->tableRoom);
+        if ($this->tableExist($this->tableTeam))
+            $this->dropTable($this->tableTeam);
+        if ($this->tableExist($this->tableUnit))
+            $this->dropTable($this->tableUnit);
+        if ($this->tableExist($this->tableUnitClass))
+            $this->dropTable($this->tableUnitClass);
+        if ($this->tableExist($this->tableWeapon))
+            $this->dropTable($this->tableWeapon);
+        if ($this->tableExist($this->tableOrders))
+            $this->dropTable($this->tableOrders);
+        if ($this->tableExist($this->tableMap))
+            $this->dropTable($this->tableMap);
+    }
+
+    public function tableExist($tableName)
+    {
+        return (Yii::$app->db->schema->getTableSchema($tableName) !== null);
     }
 }
