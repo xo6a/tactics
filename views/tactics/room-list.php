@@ -1,6 +1,15 @@
 <?php
 $this->title = 'Room list';
 
+/** @var $rooms \tactics\Room[]*/
+if (count($rooms) == 0) {
+    ?>
+    <div>
+        Комнат не создано.
+    </div>
+    <?php
+}
+
 foreach ($rooms as $room) {
     /* @var $room tactics\Room */
     ?>
