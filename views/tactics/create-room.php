@@ -31,7 +31,7 @@ function generateRoomName()
             Цвет<br>
             <select class="form-control" name="team_a_color">
                 <option value="red">Красный</option>
-                <option value="red">Синий</option>
+                <option value="blue">Синий</option>
             </select>
         </label>
     </div>
@@ -56,7 +56,7 @@ function generateRoomName()
         <label>
             Цвет<br>
             <select class="form-control" name="team_b_color">
-                <option value="red">Синий</option>
+                <option value="blue">Синий</option>
                 <option value="red">Красный</option>
             </select>
         </label>
