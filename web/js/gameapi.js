@@ -18,7 +18,7 @@ function Api(){
         });
     };
 
-    this.send = function(action, data) {
+    this.send = function(action, data, params) {
         console.log(action);
         console.log(data);
 
@@ -40,7 +40,7 @@ function Api(){
         }).done(function(responce) {
 
         }).always(function() {
-            data.afterCallback();
+            params.afterCallback();
         });
     };
 

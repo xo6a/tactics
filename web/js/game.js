@@ -9,9 +9,22 @@ function Game(){
 
     /** init */
     function init() {
+        apiInit();
         drawer = new Drawer();
     }
     init();
+
+    function apiInit() {
+        spinner.show();
+
+        var
+            action = 'init',
+            params = {
+                afterCallback: spinner.hide //todo почему функция вызывается при передаче в качестве параметра
+            };
+
+        api.send(action, null, params);
+    }
 
 
 
@@ -22,13 +35,16 @@ function Game(){
         spinner.show();
 
         var
+            action = 'test',
             data = {
                 orders: drawer.getOrders(),
-                looks: drawer.getLooks(),
+                looks: drawer.getLooks()
+                },
+            params = {
                 afterCallback: spinner.hide //todo почему функция вызывается при передаче в качестве параметра
             };
 
-        api.send('test',data);
+        api.send(action, data, params);
     });
 
 
