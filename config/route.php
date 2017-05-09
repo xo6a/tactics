@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'roomlist' => 'tactics/roomlist',
-    'createroom' => 'tactics/createroom',
-    'saveroom' => 'tactics/saveroom',
-    'enterroom' => 'tactics/enterroom',
+    'roomlist' => 'web/roomlist',
+    'createroom' => 'web/createroom',
+    'saveroom' => 'web/saveroom',
+    'enterroom' => 'web/enterroom',
     'battlefield' => 'tactics/battlefield',
 ];

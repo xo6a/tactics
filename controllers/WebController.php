@@ -14,7 +14,7 @@ use tactics\Team;
 use tactics\Unit;
 use tactics\UnitClass;
 
-class TacticsController extends Controller
+class WebController extends Controller
 {
 
     public function __construct($id, $module, $config = [])
