@@ -47,12 +47,14 @@ class ApiController extends Controller
         //auth
         $this->auth();
 
-
         //take state
+        /** @var $game \tactics\Game */
+        $game = Yii::$app->game;
+        $test = $game->test();
 
         //send data
 
-        return ['status'=>'200 OK'];
+        return ['status'=>'200 OK', 'test' => $test];
     }
 
     public function actionGethistory()

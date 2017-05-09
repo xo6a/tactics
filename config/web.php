@@ -7,9 +7,9 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
-//        'tactics' => [
-//            'class' => 'tactics\Tactics',
-//        ],
+        'game' => [
+            'class' => 'tactics\Game',
+        ],
 //        'unit' => [
 //            'class' => 'tactics\Unit',
 //        ],
