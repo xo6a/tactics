@@ -10,13 +10,13 @@ function Spinner(){
     init();
 
     this.show = function(){
-        console.log('show spin');
+        // console.log('show spin');
         $spinner.css('display','block');
     };
 
 
     this.hide = function(){
-        console.log('hide spin');
+        // console.log('hide spin');
         $spinner.css('display','none');
     };
 

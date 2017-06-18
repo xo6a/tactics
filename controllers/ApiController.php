@@ -42,6 +42,24 @@ class ApiController extends Controller
         return $items;
     }
 
+    public function actionEndturn()
+    {
+        $post = Yii::$app->request->post();
+//        var_dump($post);
+        $items = $post;
+//        return $items;
+        return ['status'=>'200 OK', 'action' => 'Endturn'];
+    }
+
+    public function actionUpdate()
+    {
+        $post = Yii::$app->request->post();
+//        var_dump($post);
+        $items = $post;
+//        return $items;
+        return ['status'=>'200 OK', 'action' => 'Update'];
+    }
+
     public function actionInit()
     {
         //auth
