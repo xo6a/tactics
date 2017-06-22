@@ -86,7 +86,7 @@ class WebController extends Controller
 
         $room = new Room();
         $room->name = $post['name'];
-        $room->map = $post['map'];
+        $room->map = $post['map'];//todo $post['map'] распарсить и преобразовать в json. сохранить как карту. сюда записать id
         $room->turn = 0;
         $room->state = 'start';
         $room->save();
