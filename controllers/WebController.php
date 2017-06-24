@@ -10,6 +10,7 @@ use yii\helpers\Url;
 use yii\web\HttpException;
 use yii\web\Request;
 use tactics\Room;
+use tactics\Map;
 use tactics\Team;
 use tactics\Unit;
 use tactics\UnitClass;
@@ -84,9 +85,13 @@ class WebController extends Controller
 
         $post = Yii::$app->request->post();
 
+        $map = new Map();
+        $map->parseJson($post['map']);
+        $map->save();
+
         $room = new Room();
         $room->name = $post['name'];
-        $room->map = $post['map'];//todo $post['map'] распарсить и преобразовать в json. сохранить как карту. сюда записать id
+        $room->map = $map->id;
         $room->turn = 0;
         $room->state = 'start';
         $room->save();
@@ -128,7 +133,7 @@ class WebController extends Controller
             $u->save();
         }
 
-        $this->redirect(Url::to(['tactics/roomlist']),302);
+        $this->redirect(Url::to(['web/roomlist']),302);
     }
 
     public function actionBattlefield()

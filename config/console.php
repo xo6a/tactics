@@ -1,6 +1,7 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+require(__DIR__ . '/../tactics/autoload.php');
 
 $config = [
     'id' => 'basic-console',

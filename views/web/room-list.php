@@ -65,7 +65,7 @@ foreach ($rooms as $room) {
                             <div class="room_item__infoblock__data"><?=$team->color?></div>
                         </div>
                         <div class="room_item__infoblock">
-                            <form action="<?= yii\helpers\Url::to(['tactics/enterroom']);?>" method="post">
+                            <form action="<?= yii\helpers\Url::to(['web/enterroom']);?>" method="post">
                                 <div class="room_item__infoblock__label bg-primary"><input type="submit" class="btn btn-xs btn-success" value="Войти" data-js="enter-room" data-js-target='[data-label="team_<?=$team->id?>"]'></div>
                                 <div class="room_item__infoblock__data"><input type="text" name="pass" class="form-control team_unit__input team_unit__input--small" placeholder="пароль" data-label="team_<?=$team->id?>"></div>
                                 <input type="hidden" name="room" value="<?=$room->id?>">

@@ -24,7 +24,7 @@ class m170413_095317_create_tables extends Migration
         $this->createTable($this->tableRoom, [
             'id' => Schema::TYPE_PK,
             'name' => Schema::TYPE_STRING . ' NOT NULL',
-            'map' => Schema::TYPE_STRING . ' NOT NULL',
+            'map' => Schema::TYPE_INTEGER . ' NOT NULL',
             'turn' => Schema::TYPE_INTEGER . ' NOT NULL',
             'state' => Schema::TYPE_STRING . ' NOT NULL',
             'last_update' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')
@@ -120,7 +120,7 @@ $tiles = <<<EOT
 1111111111
 EOT;
         $tiles = preg_replace( "/\r|\n|\r\n/", "", $tiles );
-        $this->execute($this->buildInsertQuery($this->tableMap, ['name' => 'Дом', 'tiles' => $tiles, 'size_x' => '10', 'size_y' => '10', 'respawn' => '[{x:1,y:1},{x:9,y:9}]']));
+        $this->execute($this->buildInsertQuery($this->tableMap, ['name' => 'Дом', 'tiles' => $tiles, 'size_x' => '10', 'size_y' => '10', 'respawn' => '[{"x":"1","y":"1"},{"x":"9","y":"9"}]']));
     }
 
     private function buildInsertQuery($tableName, $data)

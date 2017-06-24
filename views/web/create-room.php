@@ -6,7 +6,7 @@ function generateRoomName()
     return 'Room ' . date('Y-m-d H:m:s');
 }
 ?>
-<form action="<?= yii\helpers\Url::to(['tactics/saveroom']);?>" method="post">
+<form action="<?= yii\helpers\Url::to(['web/saveroom']);?>" method="post">
 
 <h2>Комната</h2>
 <div><label>Название<br><input type="text" name="name" class="form-control" value="<?=generateRoomName()?>"></label></div>
