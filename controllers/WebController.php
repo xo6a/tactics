@@ -66,7 +66,7 @@ class WebController extends Controller
         ];
         $session->set('auth', $auth);
 
-        $this->redirect(Url::to(['tactics/battlefield']),302);
+        $this->redirect(Url::to(['web/battlefield']),302);
     }
 
     public function beforeAction($action) {
@@ -135,11 +135,19 @@ class WebController extends Controller
 
         $this->redirect(Url::to(['web/roomlist']),302);
     }
-
+    
     public function actionBattlefield()
     {
         $this->layout = 'game';
-        return $this->render('battlefield');
+        $session = Yii::$app->session;
+        if (!$session->isActive)
+            $session->open();
+        $auth = $session->get('auth');
+
+        $this->layout = 'game';
+        return $this->render('battlefield', [
+            'auth' => $auth,
+        ]);
     }
 
     /**

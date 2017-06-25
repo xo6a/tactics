@@ -5,5 +5,5 @@ return [
     'createroom' => 'web/createroom',
     'saveroom' => 'web/saveroom',
     'enterroom' => 'web/enterroom',
-    'battlefield' => 'tactics/battlefield',
+    'battlefield' => 'web/battlefield',
 ];
